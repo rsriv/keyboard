@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.rishi.keyboardpractice">
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <application>
+
+        <service android:name=".IME1"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:label="@string/imename"
+            >
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
+            <intent-filter>
+
+                <action android:name="android.view.InputMethod" />
+
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

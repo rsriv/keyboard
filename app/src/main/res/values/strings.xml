@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KeyboardPractice</string>
+    <string name ="imename">Keyboard1</string>
+    <string name="subtype_en_US">English (US)</string>
+</resources>
