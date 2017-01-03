@@ -25,7 +25,8 @@ public class IME1 extends InputMethodService
     private boolean capsLock = false;
     private KeyboardView kv;
     private Keyboard keyboard, shiftKeyboard, noShiftKeyboard;
-
+    boolean flag = false;
+    boolean flag2 = false;
     //Vibrator vibe = (Vibrator) this.getSystemService(.VIBRATOR_SERVICE) ;
     private boolean caps = false;
     private Keyboard.Key Key;
@@ -87,9 +88,9 @@ public class IME1 extends InputMethodService
                 kv.invalidateAllKeys();
             }
         }
-        List<Keyboard.Key> key = keyboard.getKeys();
-         Keyboard.Key key1 = key.get(31);
-        key1.icon = getResources().getDrawable(R.drawable.pic);
+        //List<Keyboard.Key> key = keyboard.getKeys();
+        // Keyboard.Key key1 = key.get(31);
+       // key1.icon = getResources().getDrawable(R.drawable.pic);
         if (System.currentTimeMillis()-startTime<500 && firstTime==0 && lastKey == primaryCode){
             // CHANGE INPUT: 2 spaces - 1 period, 2 shifts - caps lock
             if (primaryCode == 32){ //if space
@@ -102,7 +103,7 @@ public class IME1 extends InputMethodService
 
             if (primaryCode == Keyboard.KEYCODE_SHIFT){
                 capsLock = true;
-                caps=true;
+                caps = true;
                 keyboard.setShifted(caps);
                 kv.invalidateAllKeys();
             }
@@ -112,24 +113,57 @@ public class IME1 extends InputMethodService
         firstTime=0;
         Log.d("abc","123");
     }
-
-
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        InputConnection ic = getCurrentInputConnection();
-        Log.d("abc","123");
-            keyCode = Character.toUpperCase(keyCode);
 
-        ic.commitText(String.valueOf(keyCode),1);
-        return true;
+            Log.d("Test", "Long press!");
+            flag = false;
+            flag2 = true;
+            return true;
+
+        //return super.onKeyLongPress(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+            Log.d("asadf","laksdf");
+            event.startTracking();
+            if (flag2) {
+                flag = false;
+            } else {
+                flag = true;
+                flag2 = false;
+            }
+
+        return super.onKeyDown(keyCode, event);
+
+      //  return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+
+            event.startTracking();
+            if (flag) {
+                Log.d("Test", "Short");
+            }
+            flag = true;
+            flag2 = false;
+
+
+
+       return super.onKeyUp(keyCode, event);
     }
 
     @Override
     public void onPress(int primaryCode) {
+
     }
 
     @Override
     public void onRelease(int primaryCode) {
+
     }
 
     @Override
@@ -138,18 +172,22 @@ public class IME1 extends InputMethodService
 
     @Override
     public void swipeDown() {
+        Log.d("Swipe","Down");
     }
 
     @Override
     public void swipeLeft() {
+        Log.d("Swipe","Left");
     }
 
     @Override
     public void swipeRight() {
+        Log.d("Swipe","Right");
     }
 
     @Override
     public void swipeUp() {
+        Log.d("Swipe","Up");
         InputConnection ic = getCurrentInputConnection();
         char code = 50;
         if(Character.isLetter(code) && caps){
